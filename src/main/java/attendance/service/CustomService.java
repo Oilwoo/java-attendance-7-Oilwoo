@@ -47,10 +47,9 @@ public class CustomService {
     private void validateCanModifyAttendance(String input) {
         LocalDateTime now = DateTimes.now();
         String[] inputs = input.split(":");
-        LocalDateTime attendanceTime = LocalDateTime.of(now.getYear(), now.getMonth(), now.getMinute(),
+        LocalDateTime attendanceTime = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(),
                 Integer.parseInt(inputs[0]), Integer.parseInt(inputs[1]));
-
-        if (now.isAfter(attendanceTime)) {
+        if (attendanceTime.isAfter(now)) {
             throw new InvalidFormException();
         }
     }

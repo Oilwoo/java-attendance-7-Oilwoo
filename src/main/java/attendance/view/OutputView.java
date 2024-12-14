@@ -1,5 +1,6 @@
 package attendance.view;
 
+import attendance.domain.Attendance;
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,7 +12,7 @@ public class OutputView {
         LocalDateTime now = DateTimes.now();
         String monthDay = now.format(DateTimeFormatter.ofPattern("MM월-dd일 "));
         String dayOfWeek = now.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.KOREAN);
-        System.out.println("오늘은 " + monthDay + dayOfWeek + "입니다. 기능을 선택해 주세요.");
+        System.out.println("오늘은 " + monthDay + dayOfWeek + "요일입니다. 기능을 선택해 주세요.");
         System.out.println("1. 출석 확인");
         System.out.println("2. 출석 수정");
         System.out.println("3. 크루별 출석 기록 확인");
@@ -35,4 +36,8 @@ public class OutputView {
     public void printInputModifyTime() {
         System.out.println("언제로 변경하겠습니까?");
     }
-}
+
+    public void printAttendance(Attendance attendance) {
+        System.out.print(attendance.getPrintForm());
+    }
+ }

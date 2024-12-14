@@ -30,8 +30,11 @@ public class CustomController extends ExceptionLoopController {
             if (menuNumber == 0) {
                 break;
             }
-            if (menuNumber == 1){
+            if (menuNumber == 1) {
                 makeAttendance();
+            }
+            if (menuNumber == 2) {
+                modifyAttendance();
             }
         }
     }
@@ -54,17 +57,21 @@ public class CustomController extends ExceptionLoopController {
     }
 
     private void modifyAttendance() {
-        output.printInputCrewName();
-        String name = input.getCrewName();
-        output.printInputModifyDay();
-        String day = input.getDay();
-        output.printInputModifyTime();
-        String time = input.getTime();
-        Attendance attendance = service.modifyAttendance(crews, name, day, time);
-    }
-
-
-    private String customAction() {
-        return null;
+        try {
+            output.printInputCrewName();
+            String name = input.getCrewName();
+            output.printInputModifyDay();
+            String day = input.getDay();
+            output.printInputModifyTime();
+            String time = input.getTime();
+            Attendance attendance = service.modifyAttendance(crews, name, day, time);
+            output.printAttendance(attendance);
+            String[] splits = attendance.getDateTime().split(" ");
+            attendance.setDateTime(splits[0] + " " + time);
+            System.out.print(" -> " + time + " (" + attendance.printStatus() + ")");
+            System.out.println(" 수정 완료!");
+        } catch (CustomIllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
