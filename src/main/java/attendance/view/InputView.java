@@ -3,6 +3,8 @@ package attendance.view;
 import attendance.domain.Crew;
 import attendance.exception.InvalidFormException;
 import camp.nextstep.edu.missionutils.Console;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class InputView {
     public int getMenuNumber() {
@@ -15,8 +17,20 @@ public class InputView {
     }
 
     public String getTime() {
-        return Console.readLine();
+        String time = Console.readLine();
+        validate(time);
+        return time;
     }
+
+    public void validate(String time) {
+        try {
+            String[] splits = time.split(":");
+            LocalTime timdde = LocalTime.of(Integer.parseInt(splits[0]), Integer.parseInt(splits[1]));
+        } catch (DateTimeParseException e) {
+            throw new InvalidFormException();
+        }
+    }
+
 
     public String getDay() {
         return Console.readLine();
